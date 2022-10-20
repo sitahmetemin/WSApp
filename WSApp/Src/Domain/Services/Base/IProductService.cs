@@ -5,6 +5,6 @@ namespace WSApp.Src.Domain.Services.Base
 {
     public interface IProductService : IBaseService<Product, ProductDTO>
     {
-        Task<bool> UpdateProductList();
+        Task<bool> UpdateProductList(CancellationToken cancellationToken);
     }
 }

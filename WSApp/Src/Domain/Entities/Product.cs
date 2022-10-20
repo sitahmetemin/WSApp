@@ -1,24 +1,53 @@
-﻿using WSApp.Src.Domain.Entities.Base;
-using static WSApp.Src.Application.Utils.Enums;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using WSApp.Src.Domain.Entities.Base;
 
 namespace WSApp.Src.Domain.Entities
 {
     public class Product : BaseEntity
     {
+        [BsonElement("brand")]
         public string Brand { get; set; }
+
+        [BsonElement("modelName")]
         public string ModelName { get; set; }
+
+        [BsonElement("modelNo")]
         public string ModelNo { get; set; }
-        public OSName OS { get; set; }
+
+        [BsonElement("os")]
+        public string OS { get; set; }
+
+        [BsonElement("processorBrand")]
         public string ProcessorBrand { get; set; }
+
+        [BsonElement("processorType")]
         public string ProcessorType { get; set; }
+
+        [BsonElement("processorVersion")]
         public string ProcessorVersion { get; set; }
-        public int Ram { get; set; }
-        public int StorageSize { get; set; }
-        public StorageType StorageType { get; set; }
-        public double DisplaySize { get; set; }
-        public double Score { get; set; }
-        public double Prices { get; set; }
+
+        [BsonElement("ram")]
+        public string Ram { get; set; }
+
+        [BsonElement("storageSize")]
+        public string StorageSize { get; set; }
+
+        [BsonElement("storageType")]
+        public string StorageType { get; set; }
+
+        [BsonElement("displaySize")]
+        public string DisplaySize { get; set; }
+
+        [BsonElement("score")]
+        public string score { get; set; }
+
+        [BsonElement("prices")]
+        public string Prices { get; set; }
+
+        [BsonElement("imageUrl")]
         public string ImageUrl { get; set; }
+
+        [BsonElement("site")]
         public string Site { get; set; }
     }
 }

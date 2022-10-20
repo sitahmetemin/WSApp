@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using SharpCompress.Common;
 using System.Linq.Expressions;
 using System.Security.Cryptography.Xml;
 using WSApp.Src.Application.Options.MongoDB;
 using WSApp.Src.Application.Options.MongoDB.Abstraction;
+using WSApp.Src.Domain.Entities;
 using WSApp.Src.Domain.Entities.Base.Abstraction;
 using WSApp.Src.Domain.Repositories.Base;
 

@@ -16,8 +16,15 @@ namespace WSApp.Areas.Admin.Controllers.Admin
         [Route("update-database")]
         public async Task<bool> UpdateDatabaseAsync()
         {
-            await _productService.UpdateProductList();
-            return true;
+            try
+            {
+                await _productService.UpdateProductList();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

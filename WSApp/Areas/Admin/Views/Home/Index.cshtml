@@ -13,7 +13,8 @@
                 <div class="card-header">
                     <h4 class="card-title">Ürün Listesi</h4>
                     <div class="card-actions">
-                        <a asp-area="admin" asp-controller="product" asp-action="update-database" id="refreshDatabaseListButton" class="btn btn-outline-success">Verileri Yenile</a>
+  @*                      <a asp-area="admin" asp-controller="product" asp-action="update-database" class="btn btn-outline-success">Verileri Yenile</a>*@
+                        <button id="refreshDatabaseListButton" class="btn btn-outline-success">Verileri Yenile</button>
                     </div>
                 </div>
                 <div class="card-content">
@@ -63,18 +64,18 @@
 @section js
     {
     <script>
-        //document.getElementById("refreshDatabaseListButton").addEventListener("click", () => {
-        //    $.ajax({
-        //        url: "/admin/product/update-database",
-        //        type: 'GET',
-        //        success: function (res) {
-        //            //location.reload();
-        //            console.error(res.responseText);
-        //        },
-        //        error: function (res) {
-        //            console.error(res.responseText);
-        //        }
-        //    });
-        //});
+        document.getElementById("refreshDatabaseListButton").addEventListener("click", () => {
+            $.ajax({
+                url: "/admin/product/update-database",
+                type: 'GET',
+                success: function (res) {
+                    //location.reload();
+                    console.error(res.responseText);
+                },
+                error: function (res) {
+                    console.error(res.responseText);
+                }
+            });
+        });
     </script>
 }

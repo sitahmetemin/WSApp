@@ -5,5 +5,6 @@ namespace WSApp.Src.Domain.Repositories
 {
     public interface IProductRepository : IBaseRepositories<Product>
     {
+        Task<IEnumerable<Product>> Upsert(IEnumerable<Product> entities, CancellationToken cancellationToken = default);
     }
 }
