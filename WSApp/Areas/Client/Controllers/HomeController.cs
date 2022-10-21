@@ -26,5 +26,15 @@ namespace WSApp.Areas.Client.Controllers
             };
             return View(response);
         }
+
+        public async Task<IActionResult> Search(string input, CancellationToken cancellationToken = default)
+        {
+            var prodResult = await _productService.GetMany(qr => qr.ModelName == input, cancellationToken);
+            var response = new ProductListModel
+            {
+                Products = prodResult
+            };
+            return View(response);
+        }
     }
 }
