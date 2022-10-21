@@ -1,8 +1,8 @@
 ﻿@model List<ProductDTO>
 @{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
     ViewData["Title"] = "Dashboard";
     ViewData["Desc"] = "Ürünleri düzenleyebilirsiniz";
-    Layout = "~/Views/Admin/Shared/_AdminLayout.cshtml";
 }
 
 <!-- Hoverable rows start -->
@@ -23,12 +23,13 @@
                         <table class="table table-hover mb-0">
                             <thead>
                                 <tr>
-                                    <th>NAME</th>
-                                    <th>RATE</th>
-                                    <th>SKILL</th>
-                                    <th>TYPE</th>
-                                    <th>LOCATION</th>
-                                    <th>ACTION</th>
+                                    <th>#</th>
+                                    <th>Marka</th>
+                                    <th>Model Adı / Model No</th>
+                                    <th>Score</th>
+                                    <th>Fiyat</th>
+                                    <th>Kaynak</th>
+                                    <th>İşlem</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -37,15 +38,18 @@
                                     @foreach (var product in Model)
                                     {
                                         <tr>
+                                            <td class="text-bold-500">@product.Id</td>
                                             <td class="text-bold-500">@product.Brand</td>
-                                            <td>$15/hr</td>
-                                            <td class="text-bold-500">UI/UX</td>
-                                            <td>Remote</td>
-                                            <td>Austin,Taxes</td>
-                                            <td>
-                                                <a href="#">
-                                                    <i class="badge-circle badge-circle-light-secondary font-medium-1"
-                                               data-feather="mail"></i>
+                                            <td class="text-bold-500">@product.ModelName <br>  @product.ModelNo</td>
+                                            <td>@product.Score</td>
+                                            <td class="text-bold-500">@product.Prices</td>
+                                            <td>@product.Site</td>
+                                            <td class="">
+                                                <a class="btn btn-secondary m-1" href="/admin/product/edit?id=@product.Id">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+                                                <a class="btn btn-danger m-1" href="/admin/product/delete?id=@product.Id">
+                                                    <i class="bi bi-trash3 "></i>
                                                 </a>
                                             </td>
                                         </tr>

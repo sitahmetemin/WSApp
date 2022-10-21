@@ -3,8 +3,9 @@ using WSApp.Controllers.Base;
 using WSApp.Models.ResponseModels;
 using WSApp.Src.Domain.Services.Base;
 
-namespace WSApp.Controllers
+namespace WSApp.Areas.Client.Controllers
 {
+    [Area("Client")]
     public class HomeController : ClientBaseController
     {
         private readonly ILogger<HomeController> _logger;

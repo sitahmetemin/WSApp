@@ -10,15 +10,5 @@ namespace WSApp.Areas.Admin.Base.Controllers.Base
         {
             return View();
         }
-
-        public async virtual Task<IActionResult> Create()
-        {
-            return View();
-        }
-
-        public async virtual Task<IActionResult> Update()
-        {
-            return View();
-        }
     }
 }

@@ -11,7 +11,6 @@ builder
 
 builder.AddMongoDB();
 
-builder.Services.RazorConfiguration();
 builder.Services.AddRepositories();
 builder.Services.AddServices();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -28,19 +27,18 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-//app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
-        name: "areas",
-        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+        name: "default",
+        pattern: "{area=Client}/{controller=Home}/{action=Index}/{id?}"
     );
 
-    endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}"
-    );
+    //endpoints.MapControllerRoute(
+    //    name: "default",
+    //    pattern: "{controller=Home}/{action=Index}/{id?}"
+    //);
 });
 
 app.Run();

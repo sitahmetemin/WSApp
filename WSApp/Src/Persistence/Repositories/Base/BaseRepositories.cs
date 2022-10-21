@@ -20,6 +20,11 @@ namespace WSApp.Src.Persistence.Repositories.Base
             _mongoCl = database.GetCollection<TEntity>(typeof(TEntity).Name.ToLower()) ?? throw new ArgumentNullException(nameof(mongoClient));
         }
 
+        public virtual async Task Delete(string id, CancellationToken cancellationToken = default)
+        {
+            await _mongoCl.DeleteOneAsync(q => q.Id == id, cancellationToken: cancellationToken);
+        }
+
         public virtual async Task<TEntity> Delete(TEntity entity, CancellationToken cancellationToken = default)
         {
             await _mongoCl.DeleteOneAsync(q => q.Id == entity.Id, cancellationToken: cancellationToken);

@@ -80,7 +80,7 @@ namespace WSApp.Src.Infrastrurcture.Adapters
                     var model = new SitePropertiesModel
                     {
                         ProductUrl = productLink,
-                        SiteName = "Trendyol",
+                        Site = "Trendyol",
                         Brand = GetInnerTextByClass("detail-name"),
                         DisplaySize = GetInnerTextByXPath("//*[@id=\"product-detail-app\"]/div/section/div/ul/li[6]/span[2]/b"),
                         ImageUrl = GetImageByClassName("detail-section-img"),
@@ -137,7 +137,7 @@ namespace WSApp.Src.Infrastrurcture.Adapters
                     var model = new SitePropertiesModel
                     {
                         ProductUrl = productLink,
-                        SiteName = "N11",
+                        Site = "N11",
                         Brand = GetInnerTextByXPath("//*[@id=\"unf-prop\"]/div/ul/li[24]/p[2]/a"),
                         DisplaySize = GetInnerTextByXPath("//*[@id=\"unf-prop\"]/div/ul/li[16]/p[2]"),
                         ImageUrl = GetImageByClassName("lazy unf-p-img"),
@@ -209,7 +209,7 @@ namespace WSApp.Src.Infrastrurcture.Adapters
                         var model = new SitePropertiesModel
                         {
                             ProductUrl = productLink,
-                            SiteName = "TeknoSa",
+                            Site = "TeknoSa",
                             Brand = GetInnerTextByXPath("//*[@id=\"pdp-main\"]/div[2]/div[1]/h1/b"),
                             DisplaySize = GetInnerTextByXPath("//*[@id=\"pdp-technical\"]/div/div[1]/div/table[1]/tbody/tr[2]/td[4]"),
                             ImageUrl = GetAttributeValueByXPath("srcset", "//*[@id=\"swiper-wrapper-fc9bedb091ac1867\"]/div[1]/figure/img"),

@@ -9,15 +9,22 @@ namespace WSApp.Src.Application.Services.Base
     {
         protected readonly IMapper _mapper;
         private readonly IBaseRepositories<TEntity> _baseRepositories;
+
         public BaseService(IBaseRepositories<TEntity> baseRepositories, IMapper mapper)
         {
             _baseRepositories = baseRepositories ?? throw new ArgumentNullException(nameof(baseRepositories));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<TDTO> Delete(TEntity entity, CancellationToken cancellationToken = default)
+        public async Task Delete(string id, CancellationToken cancellationToken = default)
         {
-            var result = await _baseRepositories.Delete(entity, cancellationToken);
+            await _baseRepositories.Delete(id, cancellationToken);
+        }
+
+        public async Task<TDTO> Delete(TDTO entity, CancellationToken cancellationToken = default)
+        {
+            var input = _mapper.Map<TEntity>(entity);
+            var result = await _baseRepositories.Delete(input, cancellationToken);
             return _mapper.Map<TDTO>(result);
         }
 
@@ -50,30 +57,31 @@ namespace WSApp.Src.Application.Services.Base
             return _mapper.Map<IEnumerable<TDTO>>(result);
         }
 
-        public async Task<TDTO> Insert(TEntity entity, CancellationToken cancellationToken = default)
+        public async Task<TDTO> Insert(TDTO entity, CancellationToken cancellationToken = default)
         {
-            var result = await _baseRepositories.Insert(entity, cancellationToken);
+            var input = _mapper.Map<TEntity>(entity);
+            var result = await _baseRepositories.Insert(input, cancellationToken);
             return _mapper.Map<TDTO>(result);
         }
 
-        public async Task<IEnumerable<TDTO>> Insert(IEnumerable<TEntity> entity, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<TDTO>> Insert(IEnumerable<TDTO> entity, CancellationToken cancellationToken = default)
         {
-            var result = await _baseRepositories.Insert(entity, cancellationToken);
-
+            var input = _mapper.Map<TEntity>(entity);
+            var result = await _baseRepositories.Insert(input, cancellationToken);
             return _mapper.Map<IEnumerable<TDTO>>(result);
         }
 
-        public async Task<TDTO> Update(TEntity entity, CancellationToken cancellationToken = default)
+        public async Task<TDTO> Update(TDTO entity, CancellationToken cancellationToken = default)
         {
-            var result = await _baseRepositories.Update(entity, cancellationToken);
-
+            var input = _mapper.Map<TEntity>(entity);
+            var result = await _baseRepositories.Update(input, cancellationToken);
             return _mapper.Map<TDTO>(result);
         }
 
-        public async Task<IEnumerable<TDTO>> Update(IEnumerable<TEntity> entity, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<TDTO>> Update(IEnumerable<TDTO> entity, CancellationToken cancellationToken = default)
         {
-            var result = await _baseRepositories.Update(entity, cancellationToken);
-
+            var input = _mapper.Map<TEntity>(entity);
+            var result = await _baseRepositories.Update(input, cancellationToken);
             return _mapper.Map<IEnumerable<TDTO>>(result);
         }
     }
