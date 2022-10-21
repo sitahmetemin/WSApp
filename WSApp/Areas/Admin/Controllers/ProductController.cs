@@ -33,7 +33,7 @@ namespace WSApp.Areas.Admin.Controllers.Admin
         {
             try
             {
-                var result = _productService.Get(q => q.Id == id);
+                var result = await _productService.Get(q => q.Id == id);
                 return View(result);
             }
             catch (Exception ex)

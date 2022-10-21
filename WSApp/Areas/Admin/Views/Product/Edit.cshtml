@@ -1,5 +1,146 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model ProductDTO
 @{
+    var p = Model;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "WSApp Edit";
+    ViewData["Desc"] = "Ürünleri düzenleyebilirsiniz";
 }
+
+<section id="multiple-column-form">
+    <div class="row match-height">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Düzenle</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <form class="form" asp-area="admin" asp-controller="product" asp-action="update">
+                            <input type="hidden" value="@p.Id" name="Id" />
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="Brand">Brand</label>
+                                        <input type="text" id="Brand" class="form-control"
+                                               name="Brand" value="@p.Brand">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="ModelName">ModelName</label>
+                                        <input type="text" id="ModelName" class="form-control"
+                                               name="ModelName" value="@p.ModelName">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="ModelNo">ModelNo</label>
+                                        <input type="text" id="ModelNo" class="form-control"
+                                               name="ModelNo" value="@p.ModelNo">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="ProcessorBrand">ProcessorBrand</label>
+                                        <input type="text" id="ProcessorBrand" class="form-control"
+                                               name="ProcessorBrand" value="@p.ProcessorBrand">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="ProcessorType">ProcessorType</label>
+                                        <input type="text" id="ProcessorType" class="form-control"
+                                               name="ProcessorType" value="@p.ProcessorType">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="ProcessorVersion">ProcessorVersion</label>
+                                        <input type="text" id="ProcessorVersion" class="form-control"
+                                               name="ProcessorVersion" value="@p.ProcessorVersion">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="Ram">Ram</label>
+                                        <input type="text" id="Ram" class="form-control"
+                                               name="Ram" value="@p.Ram">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="DisplaySize">DisplaySize</label>
+                                        <input type="text" id="DisplaySize" class="form-control"
+                                               name="DisplaySize" value="@p.DisplaySize">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="OS">OS</label>
+                                        <input type="text" id="OS" class="form-control"
+                                               name="OS" value="@p.OS">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="Prices">Prices</label>
+                                        <input type="text" id="Prices" class="form-control"
+                                               name="Prices" value="@p.Prices">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="Score">Score</label>
+                                        <input type="text" id="Score" class="form-control"
+                                               name="Score" value="@p.Score">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="Site">Site</label>
+                                        <input type="text" id="Site" class="form-control"
+                                               name="Site" value="@p.Site">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="StorageSize">StorageSize</label>
+                                        <input type="text" id="StorageSize" class="form-control"
+                                               name="StorageSize" value="@p.StorageSize">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="StorageType">StorageType</label>
+                                        <input type="text" id="StorageType" class="form-control"
+                                               name="StorageType" value="@p.StorageType">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="ImageUrl">ImageUrl</label>
+                                        <input type="text" id="ImageUrl" class="form-control"
+                                               name="ImageUrl" value="@p.ImageUrl">
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Kaydet</button>
+                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Yenile</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
