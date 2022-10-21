@@ -69,11 +69,10 @@
                 url: "/admin/product/update-database",
                 type: 'GET',
                 success: function (res) {
-                    //location.reload();
-                    console.error(res.responseText);
+                    location.reload();
                 },
                 error: function (res) {
-                    console.error(res.responseText);
+                    console.error(res);
                 }
             });
         });

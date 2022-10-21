@@ -1,12 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
-using MongoDB.Bson;
 using MongoDB.Driver;
-using SharpCompress.Common;
 using System.Linq.Expressions;
-using System.Security.Cryptography.Xml;
 using WSApp.Src.Application.Options.MongoDB;
-using WSApp.Src.Application.Options.MongoDB.Abstraction;
-using WSApp.Src.Domain.Entities;
 using WSApp.Src.Domain.Entities.Base.Abstraction;
 using WSApp.Src.Domain.Repositories.Base;
 
@@ -25,26 +20,26 @@ namespace WSApp.Src.Persistence.Repositories.Base
             _mongoCl = database.GetCollection<TEntity>(typeof(TEntity).Name.ToLower()) ?? throw new ArgumentNullException(nameof(mongoClient));
         }
 
-        public async virtual Task<TEntity> Delete(TEntity entity, CancellationToken cancellationToken = default)
+        public virtual async Task<TEntity> Delete(TEntity entity, CancellationToken cancellationToken = default)
         {
-            await _mongoCl.DeleteOneAsync(q => q.Id == entity.Id);
+            await _mongoCl.DeleteOneAsync(q => q.Id == entity.Id, cancellationToken: cancellationToken);
             return entity;
         }
 
-        public async virtual Task Delete(string[] ids, CancellationToken cancellationToken = default)
+        public virtual async Task Delete(string[] ids, CancellationToken cancellationToken = default)
         {
-            await _mongoCl.DeleteManyAsync(q => ids.Contains(q.Id));
+            await _mongoCl.DeleteManyAsync(q => ids.Contains(q.Id), cancellationToken: cancellationToken);
         }
 
-        public async virtual Task<TEntity> Get(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken = default)
+        public virtual async Task<TEntity> Get(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken = default)
         {
-            var result = await _mongoCl.FindAsync(condition);
+            var result = await _mongoCl.FindAsync(condition, cancellationToken: cancellationToken);
             return result.FirstOrDefault();
         }
 
-        public async virtual Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken = default)
+        public virtual async Task<IEnumerable<TEntity>> GetAll(CancellationToken cancellationToken = default)
         {
-            var result = await _mongoCl.FindAsync(q => true);
+            var result = await _mongoCl.FindAsync(q => true, cancellationToken: cancellationToken);
             return result.ToList();
         }
 
@@ -53,25 +48,31 @@ namespace WSApp.Src.Persistence.Repositories.Base
             throw new NotImplementedException();
         }
 
-        public async virtual Task<TEntity> Insert(TEntity entity, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<TEntity>> GetMany(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken = default)
         {
-            await _mongoCl.InsertOneAsync(entity);
+            var result = await _mongoCl.FindAsync(condition, cancellationToken: cancellationToken);
+            return result.ToList();
+        }
+
+        public virtual async Task<TEntity> Insert(TEntity entity, CancellationToken cancellationToken = default)
+        {
+            await _mongoCl.InsertOneAsync(entity, cancellationToken: cancellationToken);
             return entity;
         }
 
-        public async virtual Task<IEnumerable<TEntity>> Insert(IEnumerable<TEntity> entity, CancellationToken cancellationToken = default)
+        public virtual async Task<IEnumerable<TEntity>> Insert(IEnumerable<TEntity> entity, CancellationToken cancellationToken = default)
         {
-            await _mongoCl.InsertManyAsync(entity);
+            await _mongoCl.InsertManyAsync(entity, cancellationToken: cancellationToken);
             return entity;
         }
 
-        public async virtual Task<TEntity> Update(TEntity entity, CancellationToken cancellationToken = default)
+        public virtual async Task<TEntity> Update(TEntity entity, CancellationToken cancellationToken = default)
         {
-            await _mongoCl.ReplaceOneAsync(q => q.Id == entity.Id, entity);
+            await _mongoCl.ReplaceOneAsync(q => q.Id == entity.Id, entity, cancellationToken: cancellationToken);
             return entity;
         }
 
-        public async virtual Task<IEnumerable<TEntity>> Update(IEnumerable<TEntity> entity, CancellationToken cancellationToken = default)
+        public virtual async Task<IEnumerable<TEntity>> Update(IEnumerable<TEntity> entity, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }

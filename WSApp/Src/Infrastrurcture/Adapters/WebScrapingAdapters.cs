@@ -194,37 +194,44 @@ namespace WSApp.Src.Infrastrurcture.Adapters
                     string productLink = string.Concat(baseUrl, item.GetAttributeValue("href", linkIsEmpty));
                     if (linkIsEmpty == productLink)
                         return;
-
-                    HtmlWeb subWeb = new HtmlWeb();
-                    subWeb.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
-                    subWeb.PreRequest += request =>
+                    try
                     {
-                        request.CookieContainer = new System.Net.CookieContainer();
-                        return true;
-                    };
+                        HtmlWeb subWeb = new HtmlWeb();
+                        subWeb.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+                        subWeb.PreRequest += request =>
+                        {
+                            request.CookieContainer = new System.Net.CookieContainer();
+                            return true;
+                        };
 
-                    htmlNodes = subWeb.Load(productLink);
+                        htmlNodes = subWeb.Load(productLink);
 
-                    var model = new SitePropertiesModel
+                        var model = new SitePropertiesModel
+                        {
+                            ProductUrl = productLink,
+                            SiteName = "TeknoSa",
+                            Brand = GetInnerTextByXPath("//*[@id=\"pdp-main\"]/div[2]/div[1]/h1/b"),
+                            DisplaySize = GetInnerTextByXPath("//*[@id=\"pdp-technical\"]/div/div[1]/div/table[1]/tbody/tr[2]/td[4]"),
+                            ImageUrl = GetAttributeValueByXPath("srcset", "//*[@id=\"swiper-wrapper-fc9bedb091ac1867\"]/div[1]/figure/img"),
+                            ModelName = GetInnerTextByXPath("//*[@id=\"pdp-main\"]/div[2]/div[1]/h1"),
+                            ModelNo = GetInnerTextByXPath("//*[@id=\"pdp-technical\"]/div/div[1]/div/table[3]/tbody/tr[2]/td[3]"),
+                            OS = GetInnerTextByClass("//*[@id=\"pdp-technical\"]/div/div[1]/div/table[5]/tbody/tr[2]/td[4]"),
+                            Prices = GetInnerTextByClass("prc prc-last"),
+                            ProcessorBrand = GetInnerTextByXPath("//*[@id=\"pdp-technical\"]/div/div[1]/div/table[4]/tbody/tr[2]/td[4]"),
+                            ProcessorType = GetInnerTextByXPath("//*[@id=\"pdp-technical\"]/div/div[1]/div/table[4]/tbody/tr[2]/td[4]"),
+                            ProcessorVersion = GetInnerTextByXPath("//*[@id=\"pdp-technical\"]/div/div[1]/div/table[5]/tbody/tr[2]/td[3]"),
+                            Ram = GetInnerTextByXPath("//*[@id=\"pdp-technical\"]/div/div[1]/div/table[6]/tbody/tr[2]/td[2]"),
+                            Score = GetInnerTextByClass("bv_numReviews_text"),
+                            StorageSize = GetInnerTextByXPath("//*[@id=\"pdp-technical\"]/div/div[1]/div/table[1]/tbody/tr[2]/td[1]"),
+                            StorageType = GetInnerTextByXPath("//*[@id=\"pdp-technical\"]/div/div[1]/div/table[1]/tbody/tr[2]/td[1]")
+                        };
+                        prodModel.Add(model);
+                    }
+                    catch (Exception)
                     {
-                        ProductUrl = productLink,
-                        SiteName = "TeknoSa",
-                        Brand = GetInnerTextByXPath("//*[@id=\"pdp-main\"]/div[2]/div[1]/h1/b"),
-                        DisplaySize = GetInnerTextByXPath("//*[@id=\"pdp-technical\"]/div/div[1]/div/table[1]/tbody/tr[2]/td[4]"),
-                        ImageUrl = GetAttributeValueByXPath("srcset", "//*[@id=\"swiper-wrapper-fc9bedb091ac1867\"]/div[1]/figure/img"),
-                        ModelName = GetInnerTextByXPath("//*[@id=\"pdp-main\"]/div[2]/div[1]/h1"),
-                        ModelNo = GetInnerTextByXPath("//*[@id=\"pdp-technical\"]/div/div[1]/div/table[3]/tbody/tr[2]/td[3]"),
-                        OS = GetInnerTextByClass("//*[@id=\"pdp-technical\"]/div/div[1]/div/table[5]/tbody/tr[2]/td[4]"),
-                        Prices = GetInnerTextByClass("prc prc-last"),
-                        ProcessorBrand = GetInnerTextByXPath("//*[@id=\"pdp-technical\"]/div/div[1]/div/table[4]/tbody/tr[2]/td[4]"),
-                        ProcessorType = GetInnerTextByXPath("//*[@id=\"pdp-technical\"]/div/div[1]/div/table[4]/tbody/tr[2]/td[4]"),
-                        ProcessorVersion = GetInnerTextByXPath("//*[@id=\"pdp-technical\"]/div/div[1]/div/table[5]/tbody/tr[2]/td[3]"),
-                        Ram = GetInnerTextByXPath("//*[@id=\"pdp-technical\"]/div/div[1]/div/table[6]/tbody/tr[2]/td[2]"),
-                        Score = GetInnerTextByClass("bv_numReviews_text"),
-                        StorageSize = GetInnerTextByXPath("//*[@id=\"pdp-technical\"]/div/div[1]/div/table[1]/tbody/tr[2]/td[1]"),
-                        StorageType = GetInnerTextByXPath("//*[@id=\"pdp-technical\"]/div/div[1]/div/table[1]/tbody/tr[2]/td[1]")
-                    };
-                    prodModel.Add(model);
+                        return;
+                    }
+                    
                 });
 
                 _sourceSiteModel.AddRange(prodModel);

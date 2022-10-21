@@ -7,9 +7,8 @@ namespace WSApp.Src.Application.Services.Base
 {
     public class BaseService<TEntity, TDTO> : IBaseService<TEntity, TDTO>
     {
-        private readonly IBaseRepositories<TEntity> _baseRepositories;
         protected readonly IMapper _mapper;
-
+        private readonly IBaseRepositories<TEntity> _baseRepositories;
         public BaseService(IBaseRepositories<TEntity> baseRepositories, IMapper mapper)
         {
             _baseRepositories = baseRepositories ?? throw new ArgumentNullException(nameof(baseRepositories));
@@ -33,15 +32,21 @@ namespace WSApp.Src.Application.Services.Base
             return _mapper.Map<TDTO>(result);
         }
 
-        public async Task<IEnumerable<TDTO>> GetAll(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<TDTO>> GetAll(CancellationToken cancellationToken = default)
         {
-            var result = await _baseRepositories.Get(condition, cancellationToken);
+            var result = await _baseRepositories.GetAll(cancellationToken);
             return _mapper.Map<IEnumerable<TDTO>>(result);
         }
 
         public async Task<IEnumerable<TDTO>> GetAllWithPagination(Expression<Func<TEntity, bool>> condition, int take = 20, int skip = 20, CancellationToken cancellationToken = default)
         {
             var result = await _baseRepositories.GetAllWithPagination(condition, take, skip, cancellationToken);
+            return _mapper.Map<IEnumerable<TDTO>>(result);
+        }
+
+        public async Task<IEnumerable<TDTO>> GetMany(Expression<Func<TEntity, bool>> condition, CancellationToken cancellationToken = default)
+        {
+            var result = await _baseRepositories.GetMany(condition, cancellationToken);
             return _mapper.Map<IEnumerable<TDTO>>(result);
         }
 

@@ -23,7 +23,7 @@ namespace WSApp.Src.Application.Services
             try
             {
                 WebScrapingAdapters webScraping = new WebScrapingAdapters();
-                var result = webScraping.GetScrapingData();
+                var result = await webScraping.GetScrapingData();
                 var mappedResult = _mapper.Map<List<Product>>(result);
 
                 var updateResult = await _productRepository.Upsert(mappedResult, cancellationToken);

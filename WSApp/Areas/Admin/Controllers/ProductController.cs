@@ -14,16 +14,16 @@ namespace WSApp.Areas.Admin.Controllers.Admin
         }
 
         [Route("update-database")]
-        public async Task<bool> UpdateDatabaseAsync()
+        public async Task<bool> UpdateDatabaseAsync(CancellationToken cancellationToken)
         {
             try
             {
-                await _productService.UpdateProductList();
+                await _productService.UpdateProductList(cancellationToken);
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return false;
             }
         }
     }

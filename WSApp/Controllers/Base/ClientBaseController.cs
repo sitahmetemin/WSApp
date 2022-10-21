@@ -4,17 +4,16 @@ namespace WSApp.Controllers.Base
 {
     public class ClientBaseController : Controller
     {
-        public async virtual Task<IActionResult> Index()
+        public virtual async Task<IActionResult> Create(CancellationToken cancellationToken = default)
         {
             return View();
         }
 
-        public async virtual Task<IActionResult> Create()
+        public virtual async Task<IActionResult> Index(CancellationToken cancellationToken = default)
         {
             return View();
         }
-
-        public async virtual Task<IActionResult> Update()
+        public virtual async Task<IActionResult> Update(CancellationToken cancellationToken = default)
         {
             return View();
         }

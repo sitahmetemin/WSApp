@@ -14,9 +14,9 @@ namespace WSApp.Areas.Admin.Controllers.Admin
             _productService = productService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(CancellationToken cancellationToken = default)
         {
-            var result = await _productService.GetAll(q => true);
+            var result = await _productService.GetAll(cancellationToken);
             return View(result);
         }
     }

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
+using System.Reflection.Metadata;
 using WSApp.Src.Application.Options.MongoDB;
 using WSApp.Src.Domain.Entities;
 using WSApp.Src.Domain.Repositories;
@@ -15,24 +17,33 @@ namespace WSApp.Src.Persistence.Repositories
 
         public async Task<IEnumerable<Product>> Upsert(IEnumerable<Product> entities, CancellationToken cancellationToken = default)
         {
-            var models = new List<WriteModel<Product>>();
-
+            List<Product> productsToAdd = new List<Product>();
             foreach (var product in entities)
             {
-                var upsert = new ReplaceOneModel<Product>(
-                    filter: Builders<Product>.Filter.Eq(p => p.ModelName, product.ModelName),
-                    replacement: product)
-                {
-                    IsUpsert = true
-                };
+                var filter = Builders<Product>.Filter.Eq(p => p.ModelName, product.ModelName);
 
-                models.Add(upsert);
+                var documentCount = _mongoCl
+                    .FindAsync(filter, cancellationToken: cancellationToken)
+                    .Result
+                    .ToList()
+                    .Count;
+
+                if (documentCount != 0)
+                    _ = await _mongoCl.ReplaceOneAsync(filter, product, cancellationToken: cancellationToken);
+                else
+                    productsToAdd.Add(product);
             }
 
-            var result = await _mongoCl.BulkWriteAsync(models);
+            if (productsToAdd.Count != 0)
+            {
+                foreach (var prod in productsToAdd)
+                {
+                    prod.Id = ObjectId.GenerateNewId().ToString();
 
-            if (result.Upserts.Count == 0)
-                return null;
+                    await _mongoCl.InsertOneAsync(prod, cancellationToken);
+                }
+
+            }
 
             return entities;
         }
