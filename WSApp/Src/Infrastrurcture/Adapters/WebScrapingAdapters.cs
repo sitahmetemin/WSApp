@@ -173,7 +173,7 @@ namespace WSApp.Src.Infrastrurcture.Adapters
             {
                 HtmlWeb web = new HtmlWeb() { UseCookies = true };
                 var listUrl = string.Concat(baseUrl, urlPath);
-                web.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+                web.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36 Edg/106.0.1370.47";
                 web.PreRequest += request =>
                 {
                     request.CookieContainer = new System.Net.CookieContainer();
@@ -197,7 +197,7 @@ namespace WSApp.Src.Infrastrurcture.Adapters
                     try
                     {
                         HtmlWeb subWeb = new HtmlWeb();
-                        subWeb.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+                        subWeb.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36 Edg/106.0.1370.47";
                         subWeb.PreRequest += request =>
                         {
                             request.CookieContainer = new System.Net.CookieContainer();

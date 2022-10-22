@@ -3,170 +3,105 @@
     var prods = Model.Products;
     ViewData["Title"] = "Home Page";
     Layout = "_Layout";
+    var brands = Json.Serialize(prods.Where(w => w.Brand != null).Select(q => q.Brand.Trim()).Distinct());
+    var processorBrand = Json.Serialize(prods.Where(w => w.ProcessorBrand != null).Select(q => q.ProcessorBrand.Trim()).Distinct());
+    var ram = Json.Serialize(prods.Where(w => w.Ram != null).Select(q => q.Ram.Trim()).Distinct());
+    var displaySize = Json.Serialize(prods.Where(w => w.DisplaySize != null).Select(q => q.DisplaySize.Trim()).Distinct());
 }
 
-<div class="shop-list-section section-fluid-270 section-top-gap-100">
-    <div class="box-wrapper">
-        <div class="shop-list-wrapper">
-            <div class="container-fluid">
-                <div class="row flex-column-reverse flex-lg-row">
-                    <div class="col-xl-3 col-lg-3">
-                        <!-- Start Sidebar Area -->
-                        <div class="siderbar-section">
-                            <!-- Start Single Sidebar Widget -->
-                            <div class="sidebar-single-widget">
-                                <h6 class="sidebar-title title-border title-border">Categories</h6>
-                                <div class="sidebar-content">
-                                    <div class="filter-type-select">
-                                        <ul>
-                                            <li>
-                                                <label class="checkbox-default" for="men">
-                                                    <input type="checkbox" id="men">
-                                                    <span>Men</span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="checkbox-default" for="women">
-                                                    <input type="checkbox" id="women">
-                                                    <span>Women</span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="checkbox-default" for="kid">
-                                                    <input type="checkbox" id="kid">
-                                                    <span>Kid</span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="checkbox-default" for="fashion">
-                                                    <input type="checkbox" id="fashion">
-                                                    <span>Fashion</span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="checkbox-default" for="new-arrival">
-                                                    <input type="checkbox" id="new-arrival">
-                                                    <span>New Arrival</span>
-                                                </label>
-                                            </li>
-                                        </ul>
+@section js
+{
+    <script>
+        let productListArea = document.getElementById("productListArea");
+        let brandArea = document.getElementById("brandArea");
+        let processorBrandArea = document.getElementById("processorBrandArea");
+        let ramArea = document.getElementById("ramArea");
+        let displaySizeArea = document.getElementById("displaySizeArea");
+
+
+        let options = {
+            brands: @Html.Raw(brands),
+            processorBrand: @Html.Raw(processorBrand),
+            ram: @Html.Raw(ram),
+            displaySize: @Html.Raw(displaySize)
+        };
+
+        document.addEventListener('DOMContentLoaded', function () {
+            console.info(options);
+            createOptionsElements();
+
+        }, false);
+
+        const createOptionsElements = () => {
+            for (const val of options.brands) {
+                brandArea.innerHTML += brandArea.innerHTML = `<li><label class="checkbox-default" for="${val}"><input type="checkbox" id="${val}"><span>${val}</span></label></li>`;
+            }
+
+            for (const val of options.processorBrand) {
+                processorBrandArea.innerHTML += processorBrandArea.innerHTML = `<li><label class="checkbox-default" for="${val}"><input type="checkbox" id="${val}"><span>${val}</span></label></li>`;
+            }
+
+            for (const val of options.ram) {
+                ramArea.innerHTML += ramArea.innerHTML = `<li><label class="checkbox-default" for="${val}"><input type="checkbox" id="${val}"><span>${val}</span></label></li>`;
+            }
+
+            for (const val of options.displaySize) {
+                displaySizeArea.innerHTML += displaySizeArea.innerHTML = `<li><label class="checkbox-default" for="${val}"><input type="checkbox" id="${val}"><span>${val}</span></label></li>`;
+            }
+        }
+    </script>
+}
+
+    <div class="shop-list-section section-fluid-270 section-top-gap-100">
+        <div class="box-wrapper">
+            <div class="shop-list-wrapper">
+                <div class="container-fluid">
+                    <div class="row flex-column-reverse flex-lg-row">
+                        <div class="col-xl-3 col-lg-3">
+                            <!-- Start Sidebar Area -->
+                            <div class="siderbar-section">
+                                <!-- Start Single Sidebar Widget -->
+                                <div class="sidebar-single-widget">
+                                    <h6 class="sidebar-title title-border title-border">Categories</h6>
+                                    <div class="sidebar-content">
+                                        <div class="filter-type-select">
+                                            <ul id="brandArea"></ul>
+                                        </div>
                                     </div>
-                                </div>
-                            </div> <!-- End Single Sidebar Widget -->
-                            <!-- Start Single Sidebar Widget -->
-                            <div class="sidebar-single-widget">
-                                <h6 class="sidebar-title title-border">Color</h6>
-                                <div class="sidebar-content">
-                                    <div class="filter-type-select">
-                                        <ul>
-                                            <li>
-                                                <label class="checkbox-default" for="red">
-                                                    <input type="checkbox" id="red">
-                                                    <span>Red</span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="checkbox-default" for="green">
-                                                    <input type="checkbox" id="green">
-                                                    <span>Green</span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="checkbox-default" for="blue">
-                                                    <input type="checkbox" id="blue">
-                                                    <span>Blue</span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="checkbox-default" for="black">
-                                                    <input type="checkbox" id="black">
-                                                    <span>Black</span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="checkbox-default" for="pink">
-                                                    <input type="checkbox" id="pink">
-                                                    <span>Pink</span>
-                                                </label>
-                                            </li>
-                                        </ul>
+                                </div> 
+                                <!-- End Single Sidebar Widget -->
+                                <!-- Start Single Sidebar Widget -->
+                                <div class="sidebar-single-widget">
+                                    <h6 class="sidebar-title title-border">Processor Brand</h6>
+                                    <div class="sidebar-content">
+                                        <div class="filter-type-select">
+                                            <ul id="processorBrandArea"></ul>
+                                        </div>
                                     </div>
-                                </div>
-                            </div> <!-- End Single Sidebar Widget -->
-                            <!-- Start Single Sidebar Widget -->
-                            <div class="sidebar-single-widget">
-                                <h6 class="sidebar-title title-border">FILTER BY PRICE</h6>
-                                <div class="sidebar-content">
-                                    <input type="text" class="js-range-slider" name="my_range" value="" data-type="double" data-min="0" data-max="7000" data-from="500" data-to="5000" />
-                                </div>
-                            </div> <!-- End Single Sidebar Widget -->
-                            <!-- Start Single Sidebar Widget -->
-                            <div class="sidebar-single-widget">
-                                <h6 class="sidebar-title title-border">Material</h6>
-                                <div class="sidebar-content">
-                                    <div class="filter-type-select">
-                                        <ul>
-                                            <li>
-                                                <label class="checkbox-default" for="fabric">
-                                                    <input type="checkbox" id="fabric">
-                                                    <span>Fabric</span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="checkbox-default" for="wood">
-                                                    <input type="checkbox" id="wood">
-                                                    <span>Wood</span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="checkbox-default" for="cotton">
-                                                    <input type="checkbox" id="cotton">
-                                                    <span>Cotton</span>
-                                                </label>
-                                            </li>
-                                        </ul>
+                                </div> <!-- End Single Sidebar Widget -->
+                                <!-- Start Single Sidebar Widget -->
+                                <div class="sidebar-single-widget">
+                                    <h6 class="sidebar-title title-border">Ram</h6>
+                                    <div class="sidebar-content">
+                                        <div class="filter-type-select">
+                                            <ul id="ramArea"></ul>
+                                        </div>
                                     </div>
-                                </div>
-                            </div> <!-- End Single Sidebar Widget -->
-                            <!-- Start Single Sidebar Widget -->
-                            <div class="sidebar-single-widget">
-                                <div class="sidebar-content">
-                                    <div class="banner-animate--flash">
-                                        <a href="product-details-default.html" class="sidebar-banner img-responsive">
-                                            <img src="/client/images/banner/banner-sidebar.webp" alt="">
-                                        </a>
+                                </div> <!-- End Single Sidebar Widget -->
+                                <!-- Start Single Sidebar Widget -->
+                                <div class="sidebar-single-widget">
+                                    <h6 class="sidebar-title title-border">Display Size</h6>
+                                    <div class="sidebar-content">
+                                        <div class="filter-type-select">
+                                            <ul id="displaySizeArea"></ul>
+                                        </div>
                                     </div>
-                                </div>
-                            </div> <!-- End Single Sidebar Widget -->
-                            <!-- Start Single Sidebar Widget -->
-                            <div class="sidebar-single-widget">
-                                <h6 class="sidebar-title title-border">Tags</h6>
-                                <div class="sidebar-content">
-                                    <ul class="tag-link">
-                                        <li><a href="">Fabric</a></li>
-                                        <li><a href="">Cloth</a></li>
-                                        <li><a href="">Fashion</a></li>
-                                        <li><a href="">kid</a></li>
-                                        <li><a href="">Fakoli</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <!-- End Single Sidebar Widget -->
-                        </div> <!-- End Sidebar Area -->
-                    </div>
-                    <div class="col-xl-8 offset-xl-1 col-lg-9">
-                        <ul class="product-shop-filter-info">
-                            <li class="prduct-item-traking"><span>total 08 of 40</span></li>
-                            <li class="prduct-item-filter">
-                                <select name="choice">
-                                    <option value="first">New Arrival</option>
-                                    <option value="second" selected>Featured</option>
-                                    <option value="third">Popular</option>
-                                </select>
-                            </li>
-                        </ul>
-                        <div class="product-shop-list-items">
-                            <div class="row mb-n25">
+                                </div> <!-- End Single Sidebar Widget -->
+                            </div> <!-- End Sidebar Area -->
+                        </div>
+                        <div class="col-xl-8 offset-xl-1 col-lg-9">
+                            <div class="product-shop-list-items">
+                                <div class="row mb-n25" id="productListArea">
                                 @foreach (var p in prods)
                                 {
 
