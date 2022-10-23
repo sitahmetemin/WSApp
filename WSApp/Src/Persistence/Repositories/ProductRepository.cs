@@ -18,18 +18,22 @@ namespace WSApp.Src.Persistence.Repositories
         public async Task<IEnumerable<Product>> Upsert(IEnumerable<Product> entities, CancellationToken cancellationToken = default)
         {
             List<Product> productsToAdd = new List<Product>();
-            foreach (var product in entities)
+            foreach (var product in entities.Where(qr => !string.IsNullOrEmpty(qr.Brand) && !string.IsNullOrEmpty(qr.ModelName) && !string.IsNullOrEmpty(qr.ModelNo)))
             {
-                var filter = Builders<Product>.Filter.Eq(p => p.ModelName, product.ModelName);
+                var filterBrand = Builders<Product>.Filter.Eq(p => p.Brand, product.Brand);
+                var filterModelName = Builders<Product>.Filter.Eq(p => p.ModelName, product.ModelName);
+                var filterModelNo = Builders<Product>.Filter.Eq(p => p.ModelNo, product.ModelNo);
 
-                var documentCount = _mongoCl
-                    .FindAsync(filter, cancellationToken: cancellationToken)
+                var document = _mongoCl
+                    .FindAsync(filterBrand & filterModelName & filterModelNo, cancellationToken: cancellationToken)
                     .Result
-                    .ToList()
-                    .Count;
+                    .ToList();
 
-                if (documentCount != 0)
-                    _ = await _mongoCl.ReplaceOneAsync(filter, product, cancellationToken: cancellationToken);
+                if (document.Count != 0)
+                {
+                    product.Id = document[0].Id;
+                    _ = await _mongoCl.ReplaceOneAsync(filterBrand & filterModelName & filterModelNo, product, cancellationToken: cancellationToken);
+                }
                 else
                     productsToAdd.Add(product);
             }

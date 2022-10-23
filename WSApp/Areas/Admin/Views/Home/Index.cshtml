@@ -27,8 +27,6 @@
                                     <th>Marka</th>
                                     <th>Model Adı / Model No</th>
                                     <th>Score</th>
-                                    <th>Fiyat</th>
-                                    <th>Kaynak</th>
                                     <th>İşlem</th>
                                 </tr>
                             </thead>
@@ -42,8 +40,6 @@
                                             <td class="text-bold-500">@product.Brand</td>
                                             <td class="text-bold-500">@product.ModelName <br>  @product.ModelNo</td>
                                             <td>@product.Score</td>
-                                            <td class="text-bold-500">@product.Prices</td>
-                                            <td>@product.Site</td>
                                             <td class="">
                                                 <a class="btn btn-secondary m-1" href="/admin/product/edit?id=@product.Id">
                                                     <i class="bi bi-pencil-square"></i>
@@ -69,14 +65,17 @@
     {
     <script>
         document.getElementById("refreshDatabaseListButton").addEventListener("click", () => {
+            showLoader();
             $.ajax({
                 url: "/admin/product/update-database",
                 type: 'GET',
                 success: function (res) {
+                    hideLoader();
                     location.reload();
                 },
                 error: function (res) {
                     console.error(res);
+                    hideLoader();
                 }
             });
         });

@@ -87,25 +87,9 @@
 
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
-                                        <label for="Prices">Prices</label>
-                                        <input type="text" id="Prices" class="form-control"
-                                               name="Prices" value="@p.Prices">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
                                         <label for="Score">Score</label>
                                         <input type="text" id="Score" class="form-control"
                                                name="Score" value="@p.Score">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="Site">Site</label>
-                                        <input type="text" id="Site" class="form-control"
-                                               name="Site" value="@p.Site">
                                     </div>
                                 </div>
 
@@ -132,6 +116,52 @@
                                                name="ImageUrl" value="@p.ImageUrl">
                                     </div>
                                 </div>
+
+                                @if (p.SellSource.Count != 0)
+                                {
+                                    int counterSite = 0;
+                                    @foreach (var item in p.SellSource)
+                                    {
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="Site">Site</label>
+                                                <input type="text" id="Site" class="form-control"
+                                               name="SellSource[@counterSite][Site]" value="@item.Site">
+                                            </div>
+                                        </div>
+                                    }
+                                }
+
+                                @if (p.SellSource.Count != 0)
+                                {
+                                    int counterUrl = 0;
+                                    @foreach (var item in p.SellSource)
+                                    {
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="ProductUrl">ProductUrl</label>
+                                                <input type="text" id="ProductUrl" class="form-control"
+                                               name="SellSource[@counterUrl][ProductUrl]" value="@item.ProductUrl">
+                                            </div>
+                                        </div>
+                                    }
+                                }
+
+                                @if (p.SellSource.Count != 0)
+                                {
+                                    int counterPrice = 0;
+                                    @foreach (var item in p.SellSource)
+                                    {
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="Prices">Prices</label>
+                                                <input type="text" id="Prices" class="form-control"
+                                               name="SellSource[@counterPrice][Price]" value="@item.Price">
+                                            </div>
+                                        </div>
+                                    }
+                                }
+
                                 <div class="col-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">Kaydet</button>
                                     <button type="reset" class="btn btn-light-secondary me-1 mb-1">Yenile</button>

@@ -11,8 +11,11 @@ namespace WSApp.Src.Application.Configurations.ProfileMaps
         {
             CreateMap<Product, ProductDTO>();
             CreateMap<ProductDTO, Product>();
-
+            CreateMap<SellSourceDTO, SellSource>();
+            CreateMap<SellSource, SellSourceDTO>();
             CreateMap<SitePropertiesModel, Product>();
+            CreateMap<SitePropertiesModel, ProductDTO>();
+            CreateMap<ProductDTO, SitePropertiesModel>();
         }
     }
 }

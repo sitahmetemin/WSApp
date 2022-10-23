@@ -10,7 +10,7 @@
 }
 
 @section js
-{
+    {
     <script>
         let productListArea = document.getElementById("productListArea");
         let brandArea = document.getElementById("brandArea");
@@ -24,7 +24,7 @@
             processorBrand: @Html.Raw(processorBrand),
             ram: @Html.Raw(ram),
             displaySize: @Html.Raw(displaySize)
-        };
+                };
 
         document.addEventListener('DOMContentLoaded', function () {
             console.info(options);
@@ -68,7 +68,7 @@
                                             <ul id="brandArea"></ul>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                                 <!-- End Single Sidebar Widget -->
                                 <!-- Start Single Sidebar Widget -->
                                 <div class="sidebar-single-widget">
@@ -116,12 +116,20 @@
                                                 <div class="top">
                                                     <span class="catagory">@p.Brand</span>
                                                     <h4 class="title">@p.ModelName - @p.ModelNo</h4>
-                                                    <span class="price">@p.Prices</span>
                                                 </div>
                                                 <div class="bottom">
-                                                    <div class="product-event-items">
-                                                        <a href="cart.html" class="btn cart-btn">Add to cart</a>
-                                                        <a href="wishlist.html" class="btn wishlist-btn"><span class="material-icons">favorite_border</span></a>
+                                                    <div class="product-event-items d-flex justify-content-center aling-items-center">
+                                                        @foreach (var subProps in p.SellSource)
+                                                        {
+                                                            <a href="@subProps.ProductUrl" class="p-3 border-end" >
+                                                                <div class="text-center">
+                                                                    @subProps.Site
+                                                                </div>
+                                                                <div>
+                                                                    @subProps.Price
+                                                                </div>
+                                                            </a>
+                                                        }
                                                     </div>
                                                 </div>
 
