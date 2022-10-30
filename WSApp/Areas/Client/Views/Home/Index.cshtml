@@ -18,7 +18,6 @@
         let ramArea = document.getElementById("ramArea");
         let displaySizeArea = document.getElementById("displaySizeArea");
 
-
         let options = {
             brands: @Html.Raw(brands),
             processorBrand: @Html.Raw(processorBrand),
@@ -27,26 +26,40 @@
                 };
 
         document.addEventListener('DOMContentLoaded', function () {
-            console.info(options);
             createOptionsElements();
+
+            [...document.querySelectorAll('[data-brandName]')].forEach(el => el.addEventListener("change", (e) => {
+                let checedBrand = e.target.getAttribute("data-brandName");
+
+                [...document.querySelectorAll('[data-definename]')].forEach(el => {
+                    if (!el.getAttribute("data-definename").includes(checedBrand))
+                    el.style.display = "none"
+                });
+
+            }))
+
+            //document.querySelectorAll('[data-brandName]').addEventListener("change", (e) => {
+            //    let checedBrand = e.target.getAttribute("data-brandName");
+            //    console.log(checedBrand);
+            //});
 
         }, false);
 
         const createOptionsElements = () => {
             for (const val of options.brands) {
-                brandArea.innerHTML += brandArea.innerHTML = `<li><label class="checkbox-default" for="${val}"><input type="checkbox" id="${val}"><span>${val}</span></label></li>`;
+                brandArea.innerHTML += brandArea.innerHTML = `<li><label class="checkbox-default" for="${val}"><input data-brandName="${val}" type="checkbox" id="${val}"><span>${val}</span></label></li>`;
             }
 
             for (const val of options.processorBrand) {
-                processorBrandArea.innerHTML += processorBrandArea.innerHTML = `<li><label class="checkbox-default" for="${val}"><input type="checkbox" id="${val}"><span>${val}</span></label></li>`;
+                processorBrandArea.innerHTML += processorBrandArea.innerHTML = `<li><label class="checkbox-default" for="${val}"><input data-ProcessorBrand="${val}" type="checkbox" id="${val}"><span>${val}</span></label></li>`;
             }
 
             for (const val of options.ram) {
-                ramArea.innerHTML += ramArea.innerHTML = `<li><label class="checkbox-default" for="${val}"><input type="checkbox" id="${val}"><span>${val}</span></label></li>`;
+                ramArea.innerHTML += ramArea.innerHTML = `<li><label class="checkbox-default" for="${val}"><input data-ram="${val}" type="checkbox" id="${val}"><span>${val}</span></label></li>`;
             }
 
             for (const val of options.displaySize) {
-                displaySizeArea.innerHTML += displaySizeArea.innerHTML = `<li><label class="checkbox-default" for="${val}"><input type="checkbox" id="${val}"><span>${val}</span></label></li>`;
+                displaySizeArea.innerHTML += displaySizeArea.innerHTML = `<li><label class="checkbox-default" for="${val}"><input data-displaySize="${val}" type="checkbox" id="${val}"><span>${val}</span></label></li>`;
             }
         }
     </script>
@@ -106,7 +119,7 @@
                                 {
 
                                     <!-- Start Product Single Item -->
-                                    <div class="col-md-6 col-12 mb-25">
+                                    <div data-definename="@p.Brand-@p.ModelName-@p.ModelNo" class="col-md-6 col-12 mb-25">
                                         <div class="product-single-item-style-1">
                                             <img class="img-fluid" src="@p.ImageUrl" alt="">
                                             <ul class="tooltip-tag-items">
